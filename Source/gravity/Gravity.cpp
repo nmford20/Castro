@@ -108,8 +108,6 @@ Gravity::read_params ()
 
         ParmParse pp("gravity");
 
-#include <gravity_queries.H>
-
         if ( (gravity::gravity_type != "ConstantGrav") &&
              (gravity::gravity_type != "PoissonGrav") &&
              (gravity::gravity_type != "MonopoleGrav") &&
@@ -257,13 +255,6 @@ Gravity::read_params ()
 
         }
 
-        // Warn user about obsolete tolerance parameters.
-
-        if (pp.contains("delta_tol"))
-            amrex::Warning("The gravity parameter delta_tol is no longer used.");
-
-        if (pp.contains("sl_tol"))
-            amrex::Warning("The gravity parameter sl_tol is no longer used.");
         Ggravity = 4.0 * M_PI * C::Gconst;
         if (gravity::verbose > 1 && ParallelDescriptor::IOProcessor())
         {
@@ -1022,7 +1013,7 @@ Gravity::test_residual (const Box& bx,
     AMREX_ALWAYS_ASSERT(coord_type >= 0 && coord_type <= 2);
 
     amrex::ParallelFor(bx,
-    [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k) noexcept
+    [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k)
     {
         // Cartesian
         if (coord_type == 0) {
@@ -1391,7 +1382,7 @@ Gravity::interpolate_monopole_grav(int level, RealVector& radial_grav, MultiFab&
         // including the ghost cells.
 
         amrex::ParallelFor(bx,
-        [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k) noexcept
+        [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k)
         {
             GpuArray<Real, 3> loc;
 
@@ -1531,7 +1522,7 @@ Gravity::compute_radial_mass(const Box& bx,
     Real* const radial_vol_ptr = radial_vol.dataPtr();
 
     amrex::ParallelFor(bx,
-    [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k) noexcept
+    [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k)
     {
         Real xc = problo[0] + (static_cast<Real>(i) + 0.5_rt) * dx[0] - problem::center[0];
         Real lo_i = problo[0] + static_cast<Real>(i) * dx[0] - problem::center[0];
@@ -1908,7 +1899,7 @@ Gravity::fill_multipole_BCs(int crse_level, int fine_level, const Vector<MultiFa
                 auto vol = (*volume[lev])[mfi].array();
 
                 amrex::ParallelFor(bx,
-                [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k) noexcept
+                [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k)
                 {
                     // If we're using this to construct boundary values, then only fill
                     // the outermost bin.
@@ -2107,7 +2098,7 @@ Gravity::fill_multipole_BCs(int crse_level, int fine_level, const Vector<MultiFa
         auto phi_arr = phi[mfi].array();
 
         amrex::ParallelFor(bx,
-        [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k) noexcept
+        [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k)
         {
             const int* domlo = domain.loVect();
             const int* domhi = domain.hiVect();
@@ -2447,7 +2438,7 @@ Gravity::fill_direct_sum_BCs(int crse_level, int fine_level, const Vector<MultiF
 #endif
 
                 amrex::ParallelFor(bx,
-                [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k) noexcept
+                [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k)
                 {
                     GpuArray<Real, 3> loc, locb;
                     loc[0] = problo[0] + (static_cast<Real>(i) + 0.5_rt) * dx[0];
@@ -2736,7 +2727,7 @@ Gravity::fill_direct_sum_BCs(int crse_level, int fine_level, const Vector<MultiF
         auto bcYZHi_arr = bcYZHi.array();
 
         amrex::ParallelFor(bx,
-        [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k) noexcept
+        [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k)
         {
             if (i == bc_lo[0]) {
                 p(i,j,k) = bcYZLo_arr(0,j,k);
@@ -2950,7 +2941,7 @@ Gravity::add_pointmass_to_gravity (int level, MultiFab& phi, MultiFab& grav_vect
         Array4<Real> const phi_arr = phi.array(mfi);
 
         amrex::ParallelFor(bx,
-        [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k) noexcept
+        [=] AMREX_GPU_HOST_DEVICE (int i, int j, int k)
         {
             // Compute radial gravity due to a point mass at center[:].
 

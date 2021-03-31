@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Build System Overview &mdash; Castro  documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -30,9 +33,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"kth": "{{k_\\mathrm{th}}}", "gcc": "{\\mathrm{g~cm^{-3}}}", "cms": "{\\mathrm{cm~s^{-1}}}", "presunit": "{\\mathrm{dyn~cm^{-2}}}", "accelunit": "{\\mathrm{cm~s^{-2}}}", "ergg": "{\\mathrm{erg~g^{-1}}}", "Ab": "{{\\bf A}}", "eb": "{{\\bf e}}", "Fb": "{{\\bf F}}", "gb": "{{\\bf g}}", "Hb": "{{\\bf H}}", "ib": "{{\\bf i}}", "Ib": "{{\\bf I}}", "Kb": "{{\\bf K}}", "lb": "{{\\bf l}}", "Lb": "{{\\bf L}}", "nb": "{{\\bf n}}", "Pb": "{{\\bf P}}", "Qb": "{{\\bf Q}}", "rb": "{{\\bf r}}", "Rb": "{{\\bf R}}", "Sb": "{{\\bf S}}", "ub": "{{\\bf u}}", "Ub": "{{\\bf U}}", "xb": "{{\\bf x}}", "dt": "{\\Delta t}", "omegadot": "{\\dot\\omega}", "inp": "{{\\rm in}}", "outp": "{{\\rm out}}", "sync": "{{\\rm sync}}", "half": "{\\frac{1}{2}}", "myhalf": "{\\half}", "nph": "{{n+\\myhalf}}", "kpp": "{\\ensuremath{\\kappa_{\\mathrm{P}}}}", "kpr": "{\\ensuremath{\\kappa_{\\mathrm{R}}}}", "kpf": "{\\ensuremath{\\kappa_{\\mathrm{F}}}}", "vb": "{\\boldsymbol{v}}", "vbt": "{\\widetilde{\\vb}}", "rbt": "{\\widetilde{\\rb}}", "ob": "{\\boldsymbol{\\omega}}", "nablab": "{\\boldsymbol{\\nabla}}", "avg": ["{{\\left \\langle #1 \\right \\rangle}}", 1]}}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -55,7 +55,7 @@
 
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Castro
+            <a href="index.html" class="icon icon-home"> Castro
           
 
           
@@ -196,6 +196,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -207,7 +209,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/build_system.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -471,44 +473,8 @@ description of what each line does in the comments of the make
 file</p></li>
 </ul>
 </li>
-<li><p>(when <code class="docutils literal notranslate"><span class="pre">USE_CUDA=TRUE</span></code>) Interpret the <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">gpu</span></code></p>
-<ul class="simple">
-<li><p>The script <code class="docutils literal notranslate"><span class="pre">write_cuda_headers.py</span></code> (in <code class="docutils literal notranslate"><span class="pre">amrex/Tools/F_scripts/</span></code>) is tasked with
-understanding our custom pragma.  Its flow is:</p>
-<ul>
-<li><p>Loop over all C++ files, looking for routines that are marked
-with the pragma and return a dict keyed by the name of the
-function with values being a list of the arguments</p></li>
-<li><p>Parse the headers</p>
-<ul>
-<li><p>preprocess all of the <code class="docutils literal notranslate"><span class="pre">.H</span></code> files to the <code class="docutils literal notranslate"><span class="pre">tmp_build_dir/s/</span></code>
-directory, giving them the prefix <code class="docutils literal notranslate"><span class="pre">CPP-</span></code>.</p></li>
-<li><p>now parse the preprocessed headers, grab the function
-signatures there, modify them with the CUDA launch, and insert
-them into a copy of the original, unpreprocessed
-header.  These new copies are also put in <code class="docutils literal notranslate"><span class="pre">tmp_build_dir/s/</span></code>.</p></li>
-<li><p>loop through the C++ files that had the pragma, and add the
-needed launch macro.  These new <code class="docutils literal notranslate"><span class="pre">.cpp</span></code> files are put in the same
-<code class="docutils literal notranslate"><span class="pre">tmp_build_dir/s/</span></code> directory.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
 <li><p>Output to stdout the git version of the sources, via
 <code class="docutils literal notranslate"><span class="pre">describe_sources.py</span></code>.  This doesn’t affect the build process</p></li>
-<li><p>(when <code class="docutils literal notranslate"><span class="pre">USE+CUDA=TRUE</span></code>) Create device and host versions of each needed Fortran file. This
-is done as each <code class="docutils literal notranslate"><span class="pre">.F90</span></code> file is compiled with a rule in <code class="docutils literal notranslate"><span class="pre">Make.rules</span></code> that
-invokes <code class="docutils literal notranslate"><span class="pre">gpu_fortran.py</span></code> and then directs the compilation to build
-that version.</p>
-<ul class="simple">
-<li><p>We look for a <code class="docutils literal notranslate"><span class="pre">!$gpu</span></code> comment in routines, and use that as an
-indication to mark it up with a host and device version of the
-routine</p></li>
-<li><p>The modified <code class="docutils literal notranslate"><span class="pre">.F90</span></code> files are placed in <code class="docutils literal notranslate"><span class="pre">tmp_build_dir/s/</span></code></p></li>
-</ul>
-</li>
 </ul>
 <p>For all of this to work, we need the <code class="docutils literal notranslate"><span class="pre">tmp_build_dir/s</span></code> directory to
 be first in the vpath, so our modified sources are found and used.</p>
@@ -520,37 +486,29 @@ be first in the vpath, so our modified sources are found and used.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="debugging.html" class="btn btn-neutral float-right" title="Debugging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="faq.html" class="btn btn-neutral float-left" title="Frequently Asked Questions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="debugging.html" class="btn btn-neutral float-right" title="Debugging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="faq.html" class="btn btn-neutral float-left" title="Frequently Asked Questions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2018-2020, Castro development tem
+        &#169; Copyright 2018-2020, Castro development tem.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

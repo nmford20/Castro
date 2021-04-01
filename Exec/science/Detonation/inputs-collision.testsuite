@@ -22,7 +22,6 @@ castro.hi_bc = 2
 
 castro.do_hydro = 1
 castro.do_react = 1
-castro.reactions_max_solve_level = 0
 
 castro.cfl            = 0.5
 castro.init_shrink    = 0.1
@@ -64,6 +63,3 @@ castro.small_plot_per_is_exact = 1
 castro.output_at_completion = 1
 
 amr.message_int = 1
-castro.use_stopping_criterion = 1
-castro.T_stopping_criterion = 4.e9
-castro.ts_te_stopping_criterion = 1.e200

@@ -47,7 +47,7 @@ Castro::source_flag(int src)
             return true;
         else
             return false;
-#ifndef MHD     
+#ifndef MHD
     case thermo_src:
         if (time_integration_method == SpectralDeferredCorrections)
           return true;
@@ -56,7 +56,14 @@ Castro::source_flag(int src)
 #else
     case thermo_src:
         return true;
-#endif  
+#endif
+
+    case geom_src:
+        if (geom.Coord() == 1) {
+          return true;
+        } else {
+          return false;
+        }
 
 #ifdef DIFFUSION
     case diff_src:
@@ -100,7 +107,7 @@ void
 Castro::do_old_sources(
 #ifdef MHD
                 MultiFab& Bx, MultiFab& By, MultiFab& Bz,
-#endif          
+#endif
                 MultiFab& source, MultiFab& state_old, MultiFab& state_new, Real time, Real dt, bool apply_to_state)
 {
 
@@ -131,7 +138,7 @@ Castro::do_old_sources(
             clean_state(
 #ifdef MHD
                             Bx, By, Bz,
-#endif                      
+#endif
                             state_new, time + dt, 0);
 
             // Zero out the source MultiFab for the next source term.
@@ -157,7 +164,7 @@ Castro::do_old_sources(
             clean_state(
 #ifdef MHD
                             Bx, By, Bz,
-#endif                      
+#endif
                             state_new, time, 0);
         }
 
@@ -194,7 +201,7 @@ void
 Castro::do_new_sources(
 #ifdef MHD
                 MultiFab& Bx, MultiFab& By, MultiFab& Bz,
-#endif          
+#endif
                 MultiFab& source, MultiFab& state_old, MultiFab& state_new, Real time, Real dt, bool apply_to_state)
 {
 
@@ -230,7 +237,7 @@ Castro::do_new_sources(
             clean_state(
 #ifdef MHD
                             Bx, By, Bz,
-#endif                      
+#endif
                             state_new, time, 0);
 
             // Zero out the source MultiFab for the next source term.
@@ -256,7 +263,7 @@ Castro::do_new_sources(
             clean_state(
 #ifdef MHD
                             Bx, By, Bz,
-#endif                      
+#endif
                             state_new, time, 0);
         }
 
@@ -293,7 +300,7 @@ void
 Castro::construct_old_source(int src, MultiFab& source, MultiFab& state_in, Real time, Real dt)
 {
     BL_PROFILE("Castro::construct_old_source()");
-    
+
     BL_ASSERT(src >= 0 && src < num_src);
 
     switch(src) {
@@ -310,6 +317,10 @@ Castro::construct_old_source(int src, MultiFab& source, MultiFab& state_in, Real
 
     case thermo_src:
         construct_old_thermo_source(source, state_in, time, dt);
+        break;
+
+    case geom_src:
+        construct_old_geom_source(source, state_in, time, dt);
         break;
 
 #ifdef DIFFUSION
@@ -369,6 +380,10 @@ Castro::construct_new_source(int src, MultiFab& source, MultiFab& state_old, Mul
         construct_new_thermo_source(source, state_old, state_new, time, dt);
         break;
 #endif
+
+    case geom_src:
+        construct_new_geom_source(source, state_old, state_new, time, dt);
+        break;
 
 #ifdef DIFFUSION
     case diff_src:
@@ -562,7 +577,8 @@ Castro::get_react_source_prim(MultiFab& react_src, Real time, Real dt)
 
     int ng = 0;
 
-    // Carries the contribution of all non-reacting source terms.
+    // Carries the contribution of all non-reacting source terms to
+    // the conserved state (including the hydro update)
 
     MultiFab A(grids, dmap, NUM_STATE, ng);
 
@@ -585,25 +601,6 @@ Castro::get_react_source_prim(MultiFab& react_src, Real time, Real dt)
 
     cons_to_prim(S_noreact, q_noreact, qaux_noreact, time);
 
-    // Compute the primitive version of the old state, q_old
-
-    MultiFab q_old(grids, dmap, NQ, ng);
-    MultiFab qaux_old(grids, dmap, NQAUX, ng);
-
-    cons_to_prim(S_old, q_old, qaux_old, time);
-
-    // Compute the effective advective update on the primitive state.
-    // A(q) = (q* - q_old)/dt
-
-    MultiFab A_prim(grids, dmap, NQ, ng);
-
-    A_prim.setVal(0.0);
-
-    if (dt > 0.0) {
-        MultiFab::Saxpy(A_prim,  1.0 / dt, q_noreact, 0, 0, NQ, ng);
-        MultiFab::Saxpy(A_prim, -1.0 / dt, q_old,     0, 0, NQ, ng);
-    }
-
     // Compute the primitive version of the new state.
 
     MultiFab q_new(grids, dmap, NQ, ng);
@@ -613,14 +610,19 @@ Castro::get_react_source_prim(MultiFab& react_src, Real time, Real dt)
 
     // Compute the reaction source term.
 
+    // I_q = (q^{n+1} - q^n) / dt - A(q)
+    //
+    // but A(q) = (q* - q^n) / dt -- that's the effect of advection w/o burning
+    //
+    // so I_q = (q^{n+1} - q*) / dt
+
     react_src.setVal(0.0, react_src.nGrow());
 
     if (dt > 0.0) {
         MultiFab::Saxpy(react_src,  1.0 / dt, q_new, 0, 0, NQ, ng);
-        MultiFab::Saxpy(react_src, -1.0 / dt, q_old, 0, 0, NQ, ng);
+        MultiFab::Saxpy(react_src, -1.0 / dt, q_noreact, 0, 0, NQ, ng);
     }
 
-    MultiFab::Saxpy(react_src, -1.0, A_prim, 0, 0, NQ, ng);
 
     // Now fill all of the ghost zones.
     Real cur_time = get_state_data(Simplified_SDC_React_Type).curTime();

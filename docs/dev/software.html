@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Software Design &mdash; Castro  documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -30,7 +33,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"kth": "{{k_\\mathrm{th}}}", "gcc": "{\\mathrm{g~cm^{-3}}}", "cms": "{\\mathrm{cm~s^{-1}}}", "presunit": "{\\mathrm{dyn~cm^{-2}}}", "accelunit": "{\\mathrm{cm~s^{-2}}}", "ergg": "{\\mathrm{erg~g^{-1}}}", "Ab": "{{\\bf A}}", "eb": "{{\\bf e}}", "Fb": "{{\\bf F}}", "gb": "{{\\bf g}}", "Hb": "{{\\bf H}}", "ib": "{{\\bf i}}", "Ib": "{{\\bf I}}", "Kb": "{{\\bf K}}", "lb": "{{\\bf l}}", "Lb": "{{\\bf L}}", "nb": "{{\\bf n}}", "Pb": "{{\\bf P}}", "Qb": "{{\\bf Q}}", "rb": "{{\\bf r}}", "Rb": "{{\\bf R}}", "Sb": "{{\\bf S}}", "ub": "{{\\bf u}}", "Ub": "{{\\bf U}}", "xb": "{{\\bf x}}", "dt": "{\\Delta t}", "omegadot": "{\\dot\\omega}", "inp": "{{\\rm in}}", "outp": "{{\\rm out}}", "sync": "{{\\rm sync}}", "half": "{\\frac{1}{2}}", "myhalf": "{\\half}", "nph": "{{n+\\myhalf}}", "kpp": "{\\ensuremath{\\kappa_{\\mathrm{P}}}}", "kpr": "{\\ensuremath{\\kappa_{\\mathrm{R}}}}", "kpf": "{\\ensuremath{\\kappa_{\\mathrm{F}}}}", "vb": "{\\boldsymbol{v}}", "vbt": "{\\widetilde{\\vb}}", "rbt": "{\\widetilde{\\rb}}", "ob": "{\\boldsymbol{\\omega}}", "nablab": "{\\boldsymbol{\\nabla}}", "avg": ["{{\\left \\langle #1 \\right \\rangle}}", 1]}}})</script>
     
@@ -55,7 +57,7 @@
 
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Castro
+            <a href="index.html" class="icon icon-home"> Castro
           
 
           
@@ -139,9 +141,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#amrex-constants-module"><code class="docutils literal notranslate"><span class="pre">amrex_constants_module</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#extern-probin-module"><code class="docutils literal notranslate"><span class="pre">extern_probin_module</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fundamental-constants-module"><code class="docutils literal notranslate"><span class="pre">fundamental_constants_module</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#math-module"><code class="docutils literal notranslate"><span class="pre">math_module</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#meth-params-module"><code class="docutils literal notranslate"><span class="pre">meth_params_module</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#model-parser-module"><code class="docutils literal notranslate"><span class="pre">model_parser_module</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#prob-params-module"><code class="docutils literal notranslate"><span class="pre">prob_params_module</span></code></a></li>
 </ul>
 </li>
@@ -225,6 +225,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -236,7 +238,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/software.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -283,11 +285,11 @@ within a node, to loop over subregions of a box with different
 threads.</p>
 <p>The code structure in the Castro/ directory reflects the
 division between C++ and Fortran.</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">constants/</span></code>: contains a file of useful constants in CGS units</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">docs/</span></code>: you’re reading this now!</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Exec/</span></code>: various problem implementations, sorted by category:</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Diagnostics/</span></code>: various analysis routines for specific problems</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Docs/</span></code>: you’re reading this now!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Exec/</span></code>: various problem implementations, sorted by category:</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">gravity_tests/</span></code>: test problems that primarily exercise the gravity solver</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hydro_tests/</span></code>: test problems of the hydrodynamics (with or without reactions)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">radiation_tests/</span></code>: test problems that primarily exercise the radiation hydrodynamics solver</p></li>
@@ -297,37 +299,30 @@ division between C++ and Fortran.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">unit_tests/</span></code>: test problems that exercise primarily a single module</p></li>
 </ul>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">external/Microphysics/</span></code>: contains directories for different default
-microphysics (these are all implemented in Fortran)</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">conductivity/</span></code>: the thermal conductivity</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">EOS/</span></code>: the equation of state</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">networks/</span></code>: the nuclear reaction networks</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">opacity/</span></code>: the radiative opacity (used with radiation)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">viscosity/</span></code>: the viscous transport coefficient</p></li>
-</ul>
-</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">external/</span></code>: if you are using git submodules, the Microphysics and AMReX git
+submodules will be in this directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">paper/</span></code>: the JOSS paper source</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Source/</span></code>: source code. In this main directory is all of the
 code. Sources are mixed C++ and Fortran and are organized by topic
 as:</p>
-<blockquote>
-<div><ul class="simple">
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">diffusion/</span></code> : thermal diffusion code</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">driver/</span></code> : the main driver, I/O, runtime parameter support</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gravity/</span></code> : self-gravity code</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hydro/</span></code> : the compressible hydrodynamics code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mhd/</span></code> : the MHD solver code</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">particles/</span></code> : support for particles</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">problems/</span></code> : template code for implementing a problem</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">radiation/</span></code> : the implicit radiation solve code</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">reactions/</span></code> : nuclear reaction code</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rotation/</span></code> : rotating code</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">scf/</span></code> : the self-consistent field initialization support</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sdc/</span></code>: code specified for the true SDC method</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">sources/</span></code> : hydrodynamics source terms support</p></li>
 </ul>
-</div></blockquote>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Util/</span></code>: a catch-all for additional things you may need</p>
-<ul class="simple">
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">ConvertCheckpoint/</span></code>: a tool to convert a checkpoint file to
 a larger domain</p></li>
 <li><p>…</p></li>
@@ -690,7 +685,7 @@ will look like:</p>
                    <span class="n">state</span><span class="p">,</span> <span class="n">ncomp</span><span class="p">,</span> <span class="p">&amp;</span>
                    <span class="n">s_lo</span><span class="p">,</span> <span class="n">s_hi</span><span class="p">)</span> <span class="k">bind</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;do_work&quot;</span><span class="p">)</span>
 
-  <span class="k">use </span><span class="n">prob_params_module</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="n">dg</span>
+  <span class="k">use </span><span class="n">prob_params_module</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">dg</span>
 
   <span class="kt">integer</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lo</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">hi</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
   <span class="kt">integer</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s_lo</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">s_hi</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">ncomp</span>
@@ -707,9 +702,9 @@ will look like:</p>
            <span class="c">! work on state(i,j,k,:), where the last index</span>
            <span class="c">! is the component of the multifab</span>
 
-        <span class="n">enddo</span>
-     <span class="n">enddo</span>
-  <span class="n">enddo</span>
+        <span class="k">enddo</span>
+<span class="k">     enddo</span>
+<span class="k">  enddo</span>
 
 <span class="k">end subroutine </span><span class="n">do_work</span>
 </pre></div>
@@ -869,9 +864,9 @@ all around:</p>
            <span class="c">! work on state(i,j,k,:), where the last index</span>
            <span class="c">! is the component of the multifab</span>
 
-        <span class="n">enddo</span>
-     <span class="n">enddo</span>
-  <span class="n">enddo</span>
+        <span class="k">enddo</span>
+<span class="k">     enddo</span>
+<span class="k">  enddo</span>
 
 <span class="k">end subroutine </span><span class="n">do_work</span>
 </pre></div>
@@ -1135,7 +1130,7 @@ the <code class="docutils literal notranslate"><span class="pre">inputs</span></
 parameters. The generally supported boundary conditions are, their
 corresponding integer key, and the action they take for the normal
 velocity, transverse velocity, and generic scalar are shown in
-<a class="reference internal" href="#table-castro-bcs"><span class="std std-numref">Table 22</span></a>.</p>
+<a class="reference internal" href="#table-castro-bcs"><span class="std std-numref">Table 5</span></a>.</p>
 <p>The definition of the specific actions are:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">INT_DIR</span></code>: data taken from other grids or interpolated</p></li>
@@ -1157,9 +1152,9 @@ routines are discussed more below.</p>
 boundary), then you choose an <em>inflow</em> boundary at that face of
 the domain. You then need to write the implementation code for this.
 There is a centralized hydrostatic boundary condition that is implemented
-this way—see <a class="reference internal" href="creating_a_problem.html#create-bcs"><span class="std std-ref">Boundary conditions</span></a>.</p>
+this way—see <a class="reference internal" href="creating_a_problem.html#create-bcs"><span class="std std-ref">Boundary Conditions</span></a>.</p>
 <span id="table-castro-bcs"></span><table class="docutils align-default" id="id11">
-<caption><span class="caption-number">Table 22 </span><span class="caption-text">Physical boundary conditions supported in Castro.</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">Physical boundary conditions supported in Castro.</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 19%" />
 <col style="width: 19%" />
@@ -1279,11 +1274,6 @@ the module.</p>
 <h3><code class="docutils literal notranslate"><span class="pre">fundamental_constants_module</span></code><a class="headerlink" href="#fundamental-constants-module" title="Permalink to this headline">¶</a></h3>
 <p>This provides the CGS values of many physical constants.</p>
 </div>
-<div class="section" id="math-module">
-<h3><code class="docutils literal notranslate"><span class="pre">math_module</span></code><a class="headerlink" href="#math-module" title="Permalink to this headline">¶</a></h3>
-<p>This provides simple mathematical functions. At the moment, a cross
-product routine.</p>
-</div>
 <div class="section" id="meth-params-module">
 <h3><code class="docutils literal notranslate"><span class="pre">meth_params_module</span></code><a class="headerlink" href="#meth-params-module" title="Permalink to this headline">¶</a></h3>
 <p>This module provides the integer keys used to access the state arrays
@@ -1292,12 +1282,6 @@ and primitive variables (<code class="docutils literal notranslate"><span class=
 the number of scalar variables.</p>
 <p>It also provides the values of most of the <code class="docutils literal notranslate"><span class="pre">castro.*xxxx*</span></code>
 runtime parameters.</p>
-</div>
-<div class="section" id="model-parser-module">
-<h3><code class="docutils literal notranslate"><span class="pre">model_parser_module</span></code><a class="headerlink" href="#model-parser-module" title="Permalink to this headline">¶</a></h3>
-<p>This module is built if <code class="docutils literal notranslate"><span class="pre">USE_MODELPARSER</span></code> = <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> is set in the
-problem’s <code class="docutils literal notranslate"><span class="pre">GNUmakefile</span></code>. It then provides storage for the an initial
-model and routines to read it in and interpolate onto the Castro grid.</p>
 </div>
 <div class="section" id="prob-params-module">
 <span id="soft-prob-params"></span><h3><code class="docutils literal notranslate"><span class="pre">prob_params_module</span></code><a class="headerlink" href="#prob-params-module" title="Permalink to this headline">¶</a></h3>
@@ -1364,37 +1348,29 @@ compared to the actual code</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="problem_setups.html" class="btn btn-neutral float-right" title="Distributed Problem Setups" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="FlowChart.html" class="btn btn-neutral float-left" title="Flowchart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="problem_setups.html" class="btn btn-neutral float-right" title="Distributed Problem Setups" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="FlowChart.html" class="btn btn-neutral float-left" title="Flowchart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2018-2020, Castro development tem
+        &#169; Copyright 2018-2020, Castro development tem.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

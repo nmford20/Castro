@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Frequently Asked Questions &mdash; Castro  documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -30,9 +33,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"kth": "{{k_\\mathrm{th}}}", "gcc": "{\\mathrm{g~cm^{-3}}}", "cms": "{\\mathrm{cm~s^{-1}}}", "presunit": "{\\mathrm{dyn~cm^{-2}}}", "accelunit": "{\\mathrm{cm~s^{-2}}}", "ergg": "{\\mathrm{erg~g^{-1}}}", "Ab": "{{\\bf A}}", "eb": "{{\\bf e}}", "Fb": "{{\\bf F}}", "gb": "{{\\bf g}}", "Hb": "{{\\bf H}}", "ib": "{{\\bf i}}", "Ib": "{{\\bf I}}", "Kb": "{{\\bf K}}", "lb": "{{\\bf l}}", "Lb": "{{\\bf L}}", "nb": "{{\\bf n}}", "Pb": "{{\\bf P}}", "Qb": "{{\\bf Q}}", "rb": "{{\\bf r}}", "Rb": "{{\\bf R}}", "Sb": "{{\\bf S}}", "ub": "{{\\bf u}}", "Ub": "{{\\bf U}}", "xb": "{{\\bf x}}", "dt": "{\\Delta t}", "omegadot": "{\\dot\\omega}", "inp": "{{\\rm in}}", "outp": "{{\\rm out}}", "sync": "{{\\rm sync}}", "half": "{\\frac{1}{2}}", "myhalf": "{\\half}", "nph": "{{n+\\myhalf}}", "kpp": "{\\ensuremath{\\kappa_{\\mathrm{P}}}}", "kpr": "{\\ensuremath{\\kappa_{\\mathrm{R}}}}", "kpf": "{\\ensuremath{\\kappa_{\\mathrm{F}}}}", "vb": "{\\boldsymbol{v}}", "vbt": "{\\widetilde{\\vb}}", "rbt": "{\\widetilde{\\rb}}", "ob": "{\\boldsymbol{\\omega}}", "nablab": "{\\boldsymbol{\\nabla}}", "avg": ["{{\\left \\langle #1 \\right \\rangle}}", 1]}}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -55,7 +55,7 @@
 
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Castro
+            <a href="index.html" class="icon icon-home"> Castro
           
 
           
@@ -189,6 +189,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -200,7 +202,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/faq.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -293,18 +295,16 @@ DEBUG=TRUE.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">amrex.fpe_trap_zero</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">amrex.fpe_trap_overflow</span></code></p></li>
 </ul>
-<p>For further capabilities, defining <code class="docutils literal notranslate"><span class="pre">BACKTRACE=TRUE</span></code> enables you
-to get more information than the backtrace of the call stack info by
-instrumenting the code. (This is in C code only). Here is an
+<p>For further capabilities, you can get
+more information than the backtrace of the call stack info by
+instrumenting the code.  Here is an
 example. You know the line <code class="docutils literal notranslate"><span class="pre">Real</span> <span class="pre">rho</span> <span class="pre">=</span> <span class="pre">state(cell,0);</span></code> is
 causing a segfault. You could add a print statement before that.
 But it might print out thousands (or even millions) of line before
-it hits the segfault. With <code class="docutils literal notranslate"><span class="pre">BACKTRACE</span></code>, you could do</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#ifdef AMREX_BACKTRACING
-   std::ostringstream ss;
-   ss &lt;&lt; ``state.box() = `` &lt;&lt; state.box() &lt;&lt; `` cell = `` &lt;&lt; cell;
-   BL_BACKTRACE_PUSH(ss.str()); // PUSH takes std::string
-#endif
+it hits the segfault. Instead, you could</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>std::ostringstream ss;
+ss &lt;&lt; ``state.box() = `` &lt;&lt; state.box() &lt;&lt; `` cell = `` &lt;&lt; cell;
+BL_BACKTRACE_PUSH(ss.str()); // PUSH takes std::string
 
 Real rho = state(cell,0);  // state is a Fab, and cell is an IntVect.
 </pre></div>
@@ -431,37 +431,29 @@ by running <code class="docutils literal notranslate"><span class="pre">nvidia-x
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="build_system.html" class="btn btn-neutral float-right" title="Build System Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="visualization.html" class="btn btn-neutral float-left" title="Visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="build_system.html" class="btn btn-neutral float-right" title="Build System Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="visualization.html" class="btn btn-neutral float-left" title="Visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2018-2020, Castro development tem
+        &#169; Copyright 2018-2020, Castro development tem.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
